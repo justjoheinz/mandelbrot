@@ -1,0 +1,15 @@
+{
+  "import": [
+    "peter-jerry-ye/canvas",
+    "justjoheinz/complex/complex"
+  ],
+  "link": {
+      "wasm-gc": {
+          "exports": [
+              "draw",
+              "click"
+          ],
+          "export-memory-name": "memory"
+      }
+  }
+}
