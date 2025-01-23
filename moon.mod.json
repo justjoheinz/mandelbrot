@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "deps": {
     "peter-jerry-ye/canvas": "0.6.0",
-    "justjoheinz/complex": "0.1.0"
+    "justjoheinz/complex": "0.1.1"
   },
   "readme": "README.md",
   "repository": "",

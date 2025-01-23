@@ -25,8 +25,8 @@ fn dy(self : Config) -> Double {
 ///|
 let config : Ref[Config] = {
   val: {
-    x1: @complex.Complex::new(-2.0, 1.0),
-    x2: @complex.Complex::new(1.0, -1.0),
+    x1: @complex.Complex::{ real: -2.0, imag: 1.0 },
+    x2: @complex.Complex::{ real: 1.0, imag: -1.0 },
     max_iterations: 5000,
     width: 640,
     height: 400,
@@ -46,23 +46,23 @@ pub fn draw(canvas : @canvas.Canvas2D) -> Unit {
   mandelbrot(canvas)
 }
 
-pub fn click(canvas : @canvas.Canvas2D, event: @canvas.MouseEvent) -> Unit {
-    let xpos = event.offset_x()
-      let ypos = event.offset_y()
-      let dx = config.val.dx()
-      let dy = config.val.dy()
-      let newX1 = @complex.Complex::new(
-        config.val.x1.real + xpos * dx - 80.0 * dx,
-        config.val.x1.imag + ypos * dy - 50.0 * dy,
-      )
-      let newX2 = @complex.Complex::new(
-        newX1.real + 160.0 * dx,
-        newX1.imag + 100.0 * dy,
-      )
-      config.val = { ..config.val, x1: newX1, x2: newX2 }
-      mandelbrot(canvas)
+///|
+pub fn click(canvas : @canvas.Canvas2D, event : @canvas.MouseEvent) -> Unit {
+  let xpos = event.offset_x()
+  let ypos = event.offset_y()
+  let dx = config.val.dx()
+  let dy = config.val.dy()
+  let newX1 = @complex.Complex::{
+    real: config.val.x1.real + xpos * dx - 80.0 * dx,
+    imag: config.val.x1.imag + ypos * dy - 50.0 * dy,
+  }
+  let newX2 = @complex.Complex::{
+    real: newX1.real + 160.0 * dx,
+    imag: newX1.imag + 100.0 * dy,
+  }
+  config.val = { ..config.val, x1: newX1, x2: newX2 }
+  mandelbrot(canvas)
 }
-
 
 ///|
 fn mandelbrot(canvas : @canvas.Canvas2D) -> Unit {
@@ -71,7 +71,7 @@ fn mandelbrot(canvas : @canvas.Canvas2D) -> Unit {
   let dy = config.val.dy()
   for cx = 0.0; cx < config.val.width.to_double(); cx = cx + 1.0 {
     for cy = 0.0; cy < config.val.height.to_double(); cy = cy + 1.0 {
-      let dc = @complex.Complex::new(cx * dx, cy * dy)
+      let dc = @complex.Complex::{ real: cx * dx, imag: cy * dy }
       let c = x1 + dc
       let color = iterate(c, config.val.max_iterations)
       drawPixel(canvas, cx, cy, color)
