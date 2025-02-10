@@ -17,14 +17,36 @@
 <html lang="en">
 
 <head>
+  <link rel="stylesheet" href="/style.css">
   <script src="/component.mjs" type="module"></script>
+  <title>Mandelbrot</title>
+
 </head>
 
 <body>
-  <h1 style="font-family: sans-serif;">Mandelbrot</h1>
-  <canvas is="moonbit-canvas" src="/target/wasm-gc/release/build/mandelbrot.wasm" width="640" height="400"
-    style="border: 1px solid black"></canvas>
-  <p style="font-family: sans-serif;">Click into fractal to zoom in</p>
+  <div class="container">
+    <div>
+      <div class="headline">
+        Markus Klink</div>
+    </div>
+    <h1 class="title">Mandelbrot</h1>
+    <canvas is="moonbit-canvas" src="/target/wasm-gc/release/build/mandelbrot.wasm" width="640" height="400"
+      style="border: 1px solid black; margin-bottom: 20px"></canvas>
+      <div class="controls headline">
+        <div>
+        <span>Iterations: </span><span id="iterations"></span>
+        </div>
+        <div>
+          <span>Upper left: </span><span id="left"></span>
+          </div>
+          <div>
+            <span>Lower right: </span><span id="right"></span>
+            </div>
+
+      </div>
+
+    <div class="headline">Click into fractal to zoom in</div>
+  </div>
 </body>
 
 </html>

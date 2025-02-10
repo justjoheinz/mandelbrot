@@ -9,7 +9,8 @@
               "draw",
               "click"
           ],
-          "export-memory-name": "memory"
+          "export-memory-name": "memory",
+          "use-js-builtin-string": true
       }
   }
 }

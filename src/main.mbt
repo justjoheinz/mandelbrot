@@ -1,4 +1,5 @@
-///|
+fn set_value(id: String, value: String) -> Unit  = "mandel" "set_value"
+ ///|
 struct Config {
   x1 : @complex.Complex
   x2 : @complex.Complex
@@ -70,8 +71,15 @@ pub fn click(canvas : @canvas.Canvas2D, event : @canvas.MouseEvent) -> Unit {
 ///|
 fn mandelbrot(canvas : @canvas.Canvas2D) -> Unit {
   let x1 = config.val.x1
+  let x2 = config.val.x2
   let (dx, dy) = (config.val.dx(), config.val.dy())
   let max_iter = config.val.max_iterations
+  
+  set_value("iterations", max_iter.to_string())
+  set_value("left"  , x1.to_string())
+  set_value("right" , x2.to_string())
+ 
+
   for cx = 0.0; cx < config.val.width; cx = cx + 1.0 {
     for cy = 0.0; cy < config.val.height; cy = cy + 1.0 {
       let dc = @complex.Complex::{ real: cx * dx, imag: cy * dy }

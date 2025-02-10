@@ -13,7 +13,12 @@
 //  limitations under the License.
 
 // @ts-check
-import importObject from './.mooncakes/peter-jerry-ye/canvas/import.mjs';
+import importObject from './import.mjs';
+
+const builtins = {
+    builtins: ["js-string"],
+    importedStringConstants: "_",
+  };
 
 class MoonBitCanvas extends HTMLCanvasElement {
     constructor() {
@@ -22,7 +27,7 @@ class MoonBitCanvas extends HTMLCanvasElement {
         this.tabIndex = -1; // make it focusable
         if (wasm_url) {
             const context = this.getContext("2d")
-            WebAssembly.instantiateStreaming(fetch(wasm_url), importObject).then(
+            WebAssembly.instantiateStreaming(fetch(wasm_url), importObject, builtins).then(
                 (obj) => {
                     globalThis["peter-jerry-ye:canvas"] = {
                         eventTarget: this,
