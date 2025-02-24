@@ -14,11 +14,16 @@
 
 // @ts-check
 import importObject from './import.mjs';
+// https://github.com/GoogleChromeLabs/wasm-feature-detect
+import { jsStringBuiltins } from "https://unpkg.com/wasm-feature-detect?module";
+
 
 const builtins = {
     builtins: ["js-string"],
     importedStringConstants: "_",
-  };
+};
+
+let hasJsStringBuiltIns = await jsStringBuiltins()
 
 class MoonBitCanvas extends HTMLCanvasElement {
     constructor() {
@@ -27,21 +32,24 @@ class MoonBitCanvas extends HTMLCanvasElement {
         this.tabIndex = -1; // make it focusable
         if (wasm_url) {
             const context = this.getContext("2d")
-            WebAssembly.instantiateStreaming(fetch(wasm_url), importObject, builtins).then(
-                (obj) => {
-                    globalThis["peter-jerry-ye:canvas"] = {
-                        eventTarget: this,
-                        memory: obj.instance.exports["memory"]
-                    };
-                    this.onclick = (event) => {
+            if (hasJsStringBuiltIns) {
+                WebAssembly.instantiateStreaming(fetch(wasm_url), importObject, builtins).then(
+                    (obj) => {
+                        globalThis["peter-jerry-ye:canvas"] = {
+                            eventTarget: this,
+                            memory: obj.instance.exports["memory"]
+                        };
+                        this.onclick = (event) => {
+                            // @ts-ignore
+                            obj.instance.exports.click(context, event, new Date().getTime());
+                        }
                         // @ts-ignore
-                        obj.instance.exports.click(context, event, new Date().getTime());
+                        obj.instance.exports.draw(context, new Date().getTime());
                     }
-
-                    // @ts-ignore
-                    obj.instance.exports.draw(context, new Date().getTime());
-               }
-            )
+                )
+            } else {
+                console.error("No js-string builtins supported in this WASM runtime.")
+            }
         }
     }
 }
