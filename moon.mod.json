@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "deps": {
     "peter-jerry-ye/canvas": "0.7.0",
-    "justjoheinz/complex": "0.2.1"
+    "justjoheinz/complex": "0.2.1",
+    "moonbit-js-ffi/js": "0.2.0"
   },
   "readme": "README.md",
   "repository": "https://github.com/justjoheinz/mandelbrot",
